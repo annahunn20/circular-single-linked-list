@@ -1,0 +1,70 @@
+a header node is a special node that is found at the beginning of the list
+a list that contains this type of node, is called the header linked list.
+this type of the list is useful when information other than each node value is needed.
+for ex, suppose there is an application in which the number of nodes in a list is often calculated.
+      *usually, a list is always traversed to find the length of the list.
+      *however, if the current length is maintained in an addition header node that information can be easily obtained.
+
+Create a header linked list
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+    int data;
+    struct Node* next;
+};
+struct Node* start = NULL; // Global variable for the start of the list
+void createHeaderList() {
+    struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    printf("Enter the data: ");
+    scanf("%d", &newNode->data);
+    newNode->next = NULL;
+    if (start == NULL) {
+        // If list is empty, create a header node
+        start = (struct Node*) malloc(sizeof(struct Node));
+        start->next = newNode;
+    } else {
+        // If list is not empty, insert newNode at the end
+        struct Node* curr = start->next;
+        while (curr->next != NULL) {
+            curr = curr->next;
+        }
+        curr->next = newNode;
+    }
+}
+void printList() {
+    if (start == NULL || start->next == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    struct Node* temp = start->next; // Skip the header node
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+int main() {
+    // Example usage
+    createHeaderList();
+    createHeaderList();
+    createHeaderList();
+    printf("List after insertions:\n");
+    printList();
+    return 0;
+}
+
+Display header LL
+void display() {
+    struct Node* curr = start->next; // Start from the first actual node
+
+    printf("List elements: ");
+    while (curr != NULL) {
+        printf("%d ", curr->data); // Print the data of the current node
+        curr = curr->next; // Move to the next node
+    }
+    printf("\n");
+}
