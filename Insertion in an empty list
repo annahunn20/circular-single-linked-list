@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+struct Node* head = NULL; // Assuming head is defined globally
+void insertToEmptyList() {
+    if (head != NULL) {
+        printf("List is not empty, cannot insert to empty list\n");
+        return;
+    }
+    struct Node* curr = (struct Node*)malloc(sizeof(struct Node));
+    if (curr == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    printf("Enter the data: ");
+    scanf("%d", &curr->data);
+    curr->next = curr; // Point to itself to form a circular link
+    head = curr; // Set head to the new node
+}
+void printList() {
+    if (head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    struct Node* temp = head;
+    do {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    } while (temp != head); // Traverse until we reach back to the head
+    printf("\n");
+}
+int main() {
+    insertToEmptyList();
+    printf("List after insertion:\n");
+    printList();
+    return 0;
+}
