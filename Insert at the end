@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+    int data;
+    struct Node* next;
+};
+struct Node* head = NULL;
+struct Node* last = NULL; // Global variables for head and last in circular list
+void insertAtEnd() {
+    struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    printf("Enter the data: ");
+    scanf("%d", &newNode->data);
+    if (last == NULL) {
+        // If list is empty
+        newNode->next = newNode;
+        head = last = newNode;
+    } else {
+        // If list is not empty
+        newNode->next = head; // New node points to head to maintain circularity
+        last->next = newNode; // Current last node points to new node
+        last = newNode; // Update last to new node
+    }
+}
+void printList() {
+    if (head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    struct Node* temp = head;
+    do {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    } while (temp != head); // Traverse until we reach back to the head
+    printf("\n");
+}
+int main() {
+    // Example usage
+    insertAtEnd();
+    insertAtEnd();
+    insertAtEnd();
+    printf("List after insertions:\n");
+    printList();
+    return 0;
+}
